@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Product;
@@ -7,70 +6,62 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // Tampilkan semua produk
+    // Tampilkan semua data produk
     public function index()
     {
         $products = Product::all();
-        return response()->json($products);
+        return view('admin.products.index', compact('products'));
     }
 
-    // Simpan produk baru
+    // Tampilkan form tambah produk baru
+    public function create()
+    {
+        return view('admin.products.create');
+    }
+
+    // Simpan produk baru ke database
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string',
-            'category' => 'required|string|in:Clothing,Accessories,Footwear,Outerwear',
+            'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
-            'image' => 'nullable|string',
+            'image' => 'nullable|string|max:255',
         ]);
 
-        $product = Product::create($validated);
+        Product::create($validated);
 
-        return response()->json($product, 201);
+        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
-    // Tampilkan detail produk berdasarkan ID
-    public function show($id)
+    // Tampilkan form edit produk
+    public function edit(Product $product)
     {
-        $product = Product::find($id);
-        if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
-        }
-        return response()->json($product);
+        return view('admin.products.edit', compact('product'));
     }
 
-    // Update produk berdasarkan ID
-    public function update(Request $request, $id)
+    // Update produk ke database
+    public function update(Request $request, Product $product)
     {
-        $product = Product::find($id);
-        if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
-        }
-
         $validated = $request->validate([
-            'name' => 'sometimes|required|string',
-            'category' => 'sometimes|required|string|in:Clothing,Accessories,Footwear,Outerwear',
+            'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'sometimes|required|numeric',
-            'image' => 'nullable|string',
+            'price' => 'required|numeric',
+            'image' => 'nullable|string|max:255',
         ]);
 
         $product->update($validated);
 
-        return response()->json($product);
+        return redirect()->route('products.index')->with('success', 'Produk berhasil diupdate!');
     }
 
-    // Hapus produk berdasarkan ID
-    public function destroy($id)
+    // Hapus produk
+    public function destroy(Product $product)
     {
-        $product = Product::find($id);
-        if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
-        }
-
         $product->delete();
 
-        return response()->json(['message' => 'Product deleted']);
+        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus!');
     }
 }

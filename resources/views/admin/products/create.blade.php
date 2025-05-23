@@ -1,46 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Tambah Produk - Stilo</title>
-</head>
-<body>
-    <h1>Tambah Produk Baru</h1>
+@extends('layout.admin')
 
-    @if ($errors->any())
-        <div style="color: red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+@section('content')
+<h1>Tambah Produk</h1>
 
-    <form action="/admin/store" method="POST" enctype="multipart/form-data">
+<form action="{{ route('products.store') }}" method="POST">
     @csrf
+    <div class="mb-3">
+        <label>Nama</label>
+        <input type="text" name="name" class="form-control" required>
+    </div>
 
-    <label>Nama Produk:</label><br>
-    <input type="text" name="name" required><br><br>
+    <div class="mb-3">
+        <label>Kategori</label>
+        <select name="category" class="form-control" required>
+            <option value="">-- Pilih Kategori --</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Footwear">Footwear</option>
+            <option value="Outerwear">Outerwear</option>
+        </select>
+    </div>
 
-    <label>Deskripsi:</label><br>
-    <textarea name="description" required></textarea><br><br>
+    <div class="mb-3">
+        <label>Deskripsi</label>
+        <textarea name="description" class="form-control"></textarea>
+    </div>
 
-    <label>Harga:</label><br>
-    <input type="number" step="0.01" name="price" required><br><br>
+    <div class="mb-3">
+        <label>Harga</label>
+        <input type="number" name="price" class="form-control" required>
+    </div>
 
-    <label>Kategori:</label><br>
-    <select name="category" required>
-        <option value="">-- Pilih Kategori --</option>
-        <option value="Fashion Perempuan">Fashion Perempuan</option>
-        <option value="Fashion Laki-laki">Fashion Laki-laki</option>
-    </select><br><br>
+    <div class="mb-3">
+        <label>Gambar (URL)</label>
+        <input type="text" name="image" class="form-control">
+    </div>
 
-    <label>Gambar Produk (opsional):</label><br>
-    <input type="file" name="image"><br><br>
-
-    <button type="submit">Simpan Produk</button>
+    <button type="submit" class="btn btn-success">Simpan</button>
 </form>
-    <br>
-    <a href="/">Kembali ke Beranda</a>
-</body>
-</html>
+@endsection
