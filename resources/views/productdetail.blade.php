@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stilo - Shop</title>
+    <title>Stilo - Products</title>
     <style>
         /* Reset and Base Styles */
         * {
@@ -100,13 +100,13 @@
             justify-content: center;
         }
         
-        /* Shop Banner */
-        .shop-banner {
+        /* Page Banner */
+        .page-banner {
             background-color: #f5f5f0;
             padding: 40px 0;
         }
         
-        .shop-title {
+        .page-title {
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 10px;
@@ -123,9 +123,36 @@
             text-decoration: underline;
         }
         
-        /* Shop Content */
-        .shop-content {
+        /* Products Content */
+        .products-content {
             padding: 40px 0;
+        }
+        
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .category-tab {
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .category-tab:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .category-tab.active {
+            background-color: #000;
+            color: #fff;
         }
         
         /* Filter Bar */
@@ -134,8 +161,6 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
         }
         
         .filters {
@@ -220,6 +245,8 @@
         .grey { background-color: #808080; }
         .red { background-color: #FF6B6B; }
         .yellow { background-color: #FFD700; }
+        .green { background-color: #4CAF50; }
+        .purple { background-color: #9C27B0; }
         
         /* Product Grid */
         .product-grid {
@@ -230,7 +257,6 @@
         
         .product-card {
             margin-bottom: 30px;
-            cursor: pointer;
         }
         
         .product-image {
@@ -252,6 +278,25 @@
             transform: scale(1.05);
         }
         
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #000;
+            color: #fff;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 2px;
+        }
+        
+        .product-badge.sale {
+            background-color: #FF6B6B;
+        }
+        
+        .product-badge.new {
+            background-color: #4CAF50;
+        }
+        
         .product-title {
             font-size: 14px;
             margin-bottom: 5px;
@@ -260,6 +305,15 @@
         .product-price {
             font-weight: 600;
             margin-bottom: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-weight: normal;
         }
         
         .product-colors {
@@ -272,6 +326,28 @@
             height: 12px;
             border-radius: 50%;
             cursor: pointer;
+        }
+        
+        /* Featured Products Section */
+        .featured-section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        /* New Arrivals Section */
+        .new-arrivals-section {
+            margin-bottom: 60px;
+        }
+        
+        /* Best Sellers Section */
+        .best-sellers-section {
+            margin-bottom: 60px;
         }
         
         /* Pagination */
@@ -428,6 +504,10 @@
             .product-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
+            
+            .category-tabs {
+                flex-wrap: wrap;
+            }
         }
         
         @media (max-width: 768px) {
@@ -470,8 +550,8 @@
             <div class="logo">Stilo</div>
             <nav class="nav-menu">
                 <a href="index.html">Home</a>
-                <a href="index.html" class="active">Shop</a>
-                <a href="products.html">Products</a>
+                <a href="index.html">Shop</a>
+                <a href="products.html" class="active">Products</a>
                 <a href="#">Pages</a>
                 <a href="#">Blog</a>
                 <a href="#">Elements</a>
@@ -507,290 +587,306 @@
         </div>
     </header>
 
-    <!-- Shop Banner -->
-    <section class="shop-banner">
+    <!-- Page Banner -->
+    <section class="page-banner">
         <div class="container">
-            <h1 class="shop-title">Shop</h1>
+            <h1 class="page-title">Products</h1>
             <div class="breadcrumb">
                 <a href="index.html">Home</a>
                 <span>/</span>
-                <span>Shop</span>
+                <span>Products</span>
             </div>
         </div>
     </section>
 
-    <!-- Shop Content -->
-    <section class="shop-content">
+    <!-- Products Content -->
+    <section class="products-content">
         <div class="container">
-            <!-- Filter Bar -->
-            <div class="filter-bar">
-                <div class="filters">
-                    <div class="filter-item">
-                        <span>Filter by</span>
-                    </div>
-                    <div class="filter-item">
-                        <span>Categories</span>
-                    </div>
-                    <div class="filter-item" id="color-filter-toggle">
-                        <span>Color</span>
-                        <!-- Color Filter Popup -->
-                        <div class="color-filter" id="color-filter-popup">
-                            <h3>Colors</h3>
-                            <div class="color-options">
-                                <div class="color-option">
-                                    <span class="color-dot blue"></span>
-                                    <span>Blue</span>
-                                </div>
-                                <div class="color-option">
-                                    <span class="color-dot grey"></span>
-                                    <span>Grey</span>
-                                </div>
-                                <div class="color-option">
-                                    <span class="color-dot red"></span>
-                                    <span>Red</span>
-                                </div>
-                                <div class="color-option">
-                                    <span class="color-dot yellow"></span>
-                                    <span>Yellow</span>
+            <!-- Category Tabs -->
+            <div class="category-tabs">
+                <div class="category-tab active">All Products</div>
+                <div class="category-tab">Clothing</div>
+                <div class="category-tab">Accessories</div>
+                <div class="category-tab">Footwear</div>
+                <div class="category-tab">Outerwear</div>
+                <div class="category-tab">New Arrivals</div>
+            </div>
+
+            <!-- Featured Products Section -->
+            <div class="featured-section">
+                <h2 class="section-title">Featured Products</h2>
+                
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+                    <div class="filters">
+                        <div class="filter-item">
+                            <span>Filter by</span>
+                        </div>
+                        <div class="filter-item" id="color-filter-toggle">
+                            <span>Color</span>
+                            <!-- Color Filter Popup -->
+                            <div class="color-filter" id="color-filter-popup">
+                                <h3>Colors</h3>
+                                <div class="color-options">
+                                    <div class="color-option">
+                                        <span class="color-dot blue"></span>
+                                        <span>Blue</span>
+                                    </div>
+                                    <div class="color-option">
+                                        <span class="color-dot grey"></span>
+                                        <span>Grey</span>
+                                    </div>
+                                    <div class="color-option">
+                                        <span class="color-dot red"></span>
+                                        <span>Red</span>
+                                    </div>
+                                    <div class="color-option">
+                                        <span class="color-dot yellow"></span>
+                                        <span>Yellow</span>
+                                    </div>
+                                    <div class="color-option">
+                                        <span class="color-dot green"></span>
+                                        <span>Green</span>
+                                    </div>
+                                    <div class="color-option">
+                                        <span class="color-dot purple"></span>
+                                        <span>Purple</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="filter-item">
+                            <span>Size</span>
+                        </div>
+                        <div class="filter-item">
+                            <span>Price</span>
+                        </div>
                     </div>
-                    <div class="filter-item">
-                        <span>Size</span>
-                    </div>
-                    <div class="filter-item">
-                        <span>Brand</span>
-                    </div>
-                    <div class="filter-item">
-                        <span>Price</span>
+                    <div class="sorting">
+                        <div class="filter-item">
+                            <span>Default Sorting</span>
+                        </div>
                     </div>
                 </div>
-                <div class="sorting">
-                    <div class="filter-item">
-                        <span>Default Sorting</span>
+
+                <!-- Product Grid -->
+                <div class="product-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Premium Jacket">
+                            <div class="product-badge sale">SALE</div>
+                        </div>
+                        <h3 class="product-title">Premium Jacket</h3>
+                        <div class="product-price">
+                            <span>$89.00</span>
+                            <span class="original-price">$120.00</span>
+                        </div>
+                        <div class="product-colors">
+                            <span class="product-color blue"></span>
+                            <span class="product-color grey"></span>
+                            <span class="product-color red"></span>
+                        </div>
                     </div>
-                    <div class="view-options">
-                        <div class="view-option">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="7" height="7"></rect>
-                                <rect x="14" y="3" width="7" height="7"></rect>
-                                <rect x="3" y="14" width="7" height="7"></rect>
-                                <rect x="14" y="14" width="7" height="7"></rect>
-                            </svg>
+
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Casual Sweater">
+                            <div class="product-badge new">NEW</div>
                         </div>
-                        <div class="view-option">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="8" y1="6" x2="21" y2="6"></line>
-                                <line x1="8" y1="12" x2="21" y2="12"></line>
-                                <line x1="8" y1="18" x2="21" y2="18"></line>
-                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                            </svg>
+                        <h3 class="product-title">Casual Sweater</h3>
+                        <div class="product-price">
+                            <span>$65.00</span>
                         </div>
-                        <div class="view-option">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="3" y1="6" x2="21" y2="6"></line>
-                                <line x1="3" y1="12" x2="21" y2="12"></line>
-                                <line x1="3" y1="18" x2="21" y2="18"></line>
-                            </svg>
+                        <div class="product-colors">
+                            <span class="product-color blue"></span>
+                            <span class="product-color grey"></span>
+                            <span class="product-color green"></span>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Slim Fit Shirt">
+                        </div>
+                        <h3 class="product-title">Slim Fit Shirt</h3>
+                        <div class="product-price">
+                            <span>$45.00</span>
+                        </div>
+                        <div class="product-colors">
+                            <span class="product-color blue"></span>
+                            <span class="product-color white" style="border: 1px solid #ddd;"></span>
+                            <span class="product-color red"></span>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Winter Coat">
+                            <div class="product-badge">POPULAR</div>
+                        </div>
+                        <h3 class="product-title">Winter Coat</h3>
+                        <div class="product-price">
+                            <span>$135.00</span>
+                        </div>
+                        <div class="product-colors">
+                            <span class="product-color grey"></span>
+                            <span class="product-color blue"></span>
+                            <span class="product-color red"></span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Product Grid -->
-            <div class="product-grid">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
+            <!-- New Arrivals Section -->
+            <div class="new-arrivals-section">
+                <h2 class="section-title">New Arrivals</h2>
+                
+                <!-- Product Grid -->
+                <div class="product-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
                         <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Brown Jacket">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Designer Hoodie">
+                            <div class="product-badge new">NEW</div>
                         </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
+                        <h3 class="product-title">Designer Hoodie</h3>
+                        <div class="product-price">
+                            <span>$75.00</span>
+                        </div>
+                        <div class="product-colors">
+                            <span class="product-color blue"></span>
+                            <span class="product-color grey"></span>
+                            <span class="product-color purple"></span>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Casual Pants">
+                            <div class="product-badge new">NEW</div>
+                        </div>
+                        <h3 class="product-title">Casual Pants</h3>
+                        <div class="product-price">
+                            <span>$55.00</span>
+                        </div>
+                        <div class="product-colors">
+                            <span class="product-color blue"></span>
+                            <span class="product-color grey"></span>
+                            <span class="product-color black" style="background-color: #000;"></span>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Summer T-Shirt">
+                            <div class="product-badge new">NEW</div>
+                        </div>
+                        <h3 class="product-title">Summer T-Shirt</h3>
+                        <div class="product-price">
+                            <span>$29.00</span>
+                        </div>
+                        <div class="product-colors">
+                            <span class="product-color white" style="border: 1px solid #ddd;"></span>
+                            <span class="product-color blue"></span>
+                            <span class="product-color red"></span>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Denim Jacket">
+                            <div class="product-badge new">NEW</div>
+                        </div>
+                        <h3 class="product-title">Denim Jacket</h3>
+                        <div class="product-price">
+                            <span>$85.00</span>
+                        </div>
+                        <div class="product-colors">
+                            <span class="product-color blue"></span>
+                            <span class="product-color grey"></span>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
+            <!-- Best Sellers Section -->
+            <div class="best-sellers-section">
+                <h2 class="section-title">Best Sellers</h2>
+                
+                <!-- Product Grid -->
+                <div class="product-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
                         <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Pink Hoodie">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Classic Blazer">
+                            <div class="product-badge">BEST SELLER</div>
                         </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
+                        <h3 class="product-title">Classic Blazer</h3>
+                        <div class="product-price">
+                            <span>$120.00</span>
+                        </div>
+                        <div class="product-colors">
+                            <span class="product-color black" style="background-color: #000;"></span>
+                            <span class="product-color grey"></span>
+                            <span class="product-color blue"></span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Product 3 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
+                    <!-- Product 2 -->
+                    <div class="product-card">
                         <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Black Jacket">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Wool Sweater">
+                            <div class="product-badge">BEST SELLER</div>
                         </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
+                        <h3 class="product-title">Wool Sweater</h3>
+                        <div class="product-price">
+                            <span>$79.00</span>
+                        </div>
+                        <div class="product-colors">
+                            <span class="product-color red"></span>
+                            <span class="product-color grey"></span>
+                            <span class="product-color blue"></span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Product 4 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
+                    <!-- Product 3 -->
+                    <div class="product-card">
                         <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Blue Sweater">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Leather Jacket">
+                            <div class="product-badge">BEST SELLER</div>
                         </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
+                        <h3 class="product-title">Leather Jacket</h3>
+                        <div class="product-price">
+                            <span>$199.00</span>
+                        </div>
+                        <div class="product-colors">
+                            <span class="product-color black" style="background-color: #000;"></span>
+                            <span class="product-color brown" style="background-color: #8B4513;"></span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Product 5 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
+                    <!-- Product 4 -->
+                    <div class="product-card">
                         <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Floral Jacket">
+                            <img src="/placeholder.svg?height=300&width=250" alt="Casual Shirt">
+                            <div class="product-badge">BEST SELLER</div>
                         </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
-                    </div>
-                </div>
-
-                <!-- Product 6 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
-                        <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Brown Coat">
+                        <h3 class="product-title">Casual Shirt</h3>
+                        <div class="product-price">
+                            <span>$49.00</span>
                         </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
-                    </div>
-                </div>
-
-                <!-- Product 7 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
-                        <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Plaid Shirt">
+                        <div class="product-colors">
+                            <span class="product-color blue"></span>
+                            <span class="product-color white" style="border: 1px solid #ddd;"></span>
+                            <span class="product-color green"></span>
                         </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
-                    </div>
-                </div>
-
-                <!-- Product 8 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
-                        <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Beige Coat">
-                        </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
-                    </div>
-                </div>
-
-                <!-- Product 9 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
-                        <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Beige Shirt">
-                        </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
-                    </div>
-                </div>
-
-                <!-- Product 10 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
-                        <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Pink Shirt">
-                        </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
-                    </div>
-                </div>
-
-                <!-- Product 11 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
-                        <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Beige Shorts">
-                        </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
-                    </div>
-                </div>
-
-                <!-- Product 12 -->
-                <div class="product-card">
-                    <a href="product-detail.html">
-                        <div class="product-image">
-                            <img src="/placeholder.svg?height=300&width=250" alt="Grey Blazer">
-                        </div>
-                    </a>
-                    <h3 class="product-title">Lace Shirt Cut II</h3>
-                    <div class="product-price">$16.00</div>
-                    <div class="product-colors">
-                        <span class="product-color blue"></span>
-                        <span class="product-color grey"></span>
-                        <span class="product-color red"></span>
                     </div>
                 </div>
             </div>
@@ -898,6 +994,17 @@
                 if (!colorFilterToggle.contains(e.target)) {
                     colorFilterPopup.classList.remove('active');
                 }
+            });
+
+            // Category tabs functionality
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                });
             });
         });
     </script>

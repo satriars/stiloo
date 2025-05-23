@@ -44,6 +44,7 @@
             background-color: #f5f5f0;
             padding: 20px 0;
             border-bottom: 1px solid #eee;
+            position: relative;
         }
         
         .header-container {
@@ -60,14 +61,127 @@
         .nav-menu {
             display: flex;
             gap: 20px;
+            align-items: center;
         }
         
         .nav-menu a {
             font-size: 14px;
+            position: relative;
+            padding: 10px 0;
         }
         
         .nav-menu a:hover {
             color: #666;
+        }
+        
+        /* Products Dropdown Menu */
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-item.has-dropdown:hover .dropdown-menu {
+            display: flex;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: -20px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 800px;
+            padding: 30px;
+            display: none;
+            z-index: 100;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 30px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid white;
+        }
+        
+        .dropdown-content {
+            display: flex;
+            width: 100%;
+        }
+        
+        .dropdown-column {
+            flex: 1;
+            padding: 0 15px;
+        }
+        
+        .dropdown-column h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .dropdown-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .dropdown-links a {
+            font-size: 14px;
+            color: #666;
+            transition: color 0.2s;
+            padding: 5px 0;
+        }
+        
+        .dropdown-links a:hover {
+            color: #000;
+        }
+        
+        .featured-products {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .featured-product {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .featured-product-image {
+            width: 100%;
+            height: 120px;
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .featured-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .featured-product:hover img {
+            transform: scale(1.05);
+        }
+        
+        .featured-product-title {
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        
+        .featured-product-price {
+            font-size: 13px;
+            font-weight: 600;
         }
         
         .header-icons {
@@ -419,13 +533,31 @@
             margin-top: -3px;
         }
 
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            cursor: pointer;
+        }
+        
         @media (max-width: 992px) {
+            .dropdown-menu {
+                width: 600px;
+            }
+            
             .product-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
         
         @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
             .product-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -442,10 +574,6 @@
         }
         
         @media (max-width: 576px) {
-            .nav-menu {
-                display: none;
-            }
-            
             .product-grid {
                 grid-template-columns: 1fr;
             }
@@ -466,7 +594,57 @@
             <nav class="nav-menu">
                 <a href="#">Home</a>
                 <a href="#">Shop</a>
-                <a href="#">Products</a>
+                <div class="nav-item has-dropdown">
+                    <a href="#">Products</a>
+                    <!-- Products Dropdown Menu -->
+                    <div class="dropdown-menu">
+                        <div class="dropdown-content">
+                            <div class="dropdown-column">
+                                <h3>Categories</h3>
+                                <div class="dropdown-links">
+                                    <a href="#">T-Shirts</a>
+                                    <a href="#">Sweaters</a>
+                                    <a href="#">Jackets</a>
+                                    <a href="#">Coats</a>
+                                    <a href="#">Pants</a>
+                                    <a href="#">Shorts</a>
+                                    <a href="#">Accessories</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-column">
+                                <h3>Collections</h3>
+                                <div class="dropdown-links">
+                                    <a href="#">New Arrivals</a>
+                                    <a href="#">Summer Collection</a>
+                                    <a href="#">Winter Essentials</a>
+                                    <a href="#">Casual Wear</a>
+                                    <a href="#">Formal Attire</a>
+                                    <a href="#">Limited Edition</a>
+                                    <a href="#">Sale Items</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-column">
+                                <h3>Featured Products</h3>
+                                <div class="featured-products">
+                                    <div class="featured-product">
+                                        <div class="featured-product-image">
+                                            <img src="/placeholder.svg?height=120&width=150" alt="Featured Product 1">
+                                        </div>
+                                        <div class="featured-product-title">Premium Cotton Shirt</div>
+                                        <div class="featured-product-price">$24.99</div>
+                                    </div>
+                                    <div class="featured-product">
+                                        <div class="featured-product-image">
+                                            <img src="/placeholder.svg?height=120&width=150" alt="Featured Product 2">
+                                        </div>
+                                        <div class="featured-product-title">Wool Blend Coat</div>
+                                        <div class="featured-product-price">$89.99</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <a href="#">Pages</a>
                 <a href="#">Blog</a>
                 <a href="#">Elements</a>
@@ -497,6 +675,13 @@
                         <path d="M16 10a4 4 0 0 1-8 0"></path>
                     </svg>
                     <span class="icon-badge">0</span>
+                </div>
+                <div class="mobile-menu-toggle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
                 </div>
             </div>
         </div>
