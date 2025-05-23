@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    // Field yang bisa diisi (mass assignable)
+    // Kolom mana aja yang bisa diisi lewat mass assignment (create/update)
     protected $fillable = [
         'name',
+        'category',      // kategori produk: Clothing, Accessories, dll
         'description',
         'price',
         'image',
-        'category'
     ];
 }
